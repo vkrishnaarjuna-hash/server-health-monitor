@@ -178,14 +178,16 @@ jobs:
         run: docker load -i image.tar
 
       - name: Run Trivy Vulnerability Scanner
-        uses: aquasecurity/trivy-action@v0.32.0
-        with:
-          image-ref: "server-health-monitor:${{ github.sha }}"
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest image \
+            --format table \
+            --exit-code 1 \
+            --ignore-unfixed \
+            --pkg-types os,library \
+            --severity CRITICAL,HIGH \
+            "server-health-monitor:${{ github.sha }}"
 
   publish:
     name: 7. Publish to GHCR

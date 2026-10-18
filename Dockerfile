@@ -36,8 +36,10 @@ RUN mkdir -p /data/org /data/state && \
 COPY pyproject.toml README.md ./
 COPY src/ ./src/
 
-# Install the application and CLI entrypoint
-RUN pip install --no-cache-dir .
+# Install the application and CLI entrypoint, then remove build tools to minimize attack surface and eliminate CVEs
+RUN pip install --no-cache-dir . && \
+    pip uninstall -y pip setuptools wheel && \
+    rm -rf /root/.cache
 
 # Declare standard volumes
 VOLUME ["/data/org", "/data/state"]
