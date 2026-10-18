@@ -1,0 +1,28 @@
+# .gitignore
+# RESPONSIBILITY: keep generated files and secrets out of Git.
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# Tooling output
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.scannerwork/
+
+# Local monitor state (checkpoints and quarantined copies)
+state/
+*.state.json
+*.corrupt-*
+
+# Secrets: never commit
+.env
+.env.*

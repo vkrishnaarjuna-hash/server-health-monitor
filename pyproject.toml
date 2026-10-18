@@ -1,0 +1,62 @@
+# pyproject.toml
+#
+# RESPONSIBILITY: single place for packaging and tool configuration.
+#
+
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "server-health-monitor"
+version = "0.1.0"
+description = "Lightweight, incremental, checkpointed server health monitor for log directories."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []  # standard library only: small image, small attack surface
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8,<10",
+    "pytest-cov>=5,<8",
+    "ruff>=0.8,<1",
+]
+
+[project.scripts]
+health-monitor = "health_monitor.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["health_monitor"]
+branch = true
+omit = ["*/__main__.py"]
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+exclude_also = ["if __name__ == .__main__.:"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "C4", "SIM", "RUF"]
+ignore = ["E501"]  # the formatter wraps code; long strings/comments are tolerated
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "RUF001"]      # asserts are the point of tests; unicode test data
+"scripts/**" = ["S603", "S607"]      # smoke test intentionally runs docker
+
+[tool.ruff.format]
+quote-style = "double"

@@ -1,0 +1,45 @@
+# .dockerignore
+# Keep the Docker build context small, reproducible, and secret-free.
+
+# Version control
+.git/
+.github/
+.gitattributes
+
+# Python environments and bytecode
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+build/
+dist/
+
+# Tooling and caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.scannerwork/
+
+# Test suite and smoke test scripts (not needed inside production runtime image)
+tests/
+scripts/
+
+# Sample data and runtime state (mounted as volumes at runtime)
+org/
+state/
+*.state.json
+*.corrupt-*
+
+# Secrets and local configurations
+.env
+.env.*
+*.local
+
+# Documentation (preserve only README.md required by pyproject.toml)
+*.md
+!README.md

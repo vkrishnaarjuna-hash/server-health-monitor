@@ -1,0 +1,6 @@
+# .trivyignore
+# Document accepted CVE exceptions with rationale and tracking references.
+# Example format:
+# CVE-2023-XXXXX # Justification: Not exploitable in static CLI runtime
+#
+# Currently zero exceptions accepted; all fixable HIGH and CRITICAL vulnerabilities fail the build.
